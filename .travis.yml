@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t phirani/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true phirani/react-test npm test
+
+after_success:
+  - docker build -t phirani/multi-client ./client
+  - docker build -t phirani/multi-nginx ./nginx
+  - docker build -t phirani/multi-server ./server
+  - docker build -t phirani/multi-worker ./worker
+  #Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push phirani/multi-client
+  - docker push phirani/multi-nginx
+  - docker push phirani/multi-server
+  - docker push phirani/multi-worker
+
+
+
