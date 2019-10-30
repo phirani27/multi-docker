@@ -5,19 +5,22 @@
             "name": "client",
             "image": "phirani/multi-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memoery": 128
         },
         {
             "name": "server",
             "image": "phirani/multi-server",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memoery": 128
         },
         {
             "name": "worker",
             "image": "phirani/multi-worker",
             "hostname": "worker",
-            "essential": false
+            "essential": false,
+            "memoery": 128
         },
         {
             "name": "nginx",
@@ -33,7 +36,8 @@
             "links":[
                 "client",
                 "server"
-            ]
+            ],
+            "memoery": 128
         }
     ]
 }
